@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>亮點統整報告</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --card-bg: #ffffff;
+      --body-bg: #f3f4f6;
+      --radius: 1rem;
+    }
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", ui-sans-serif, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang TC",
+        "Hiragino Sans", "Heiti TC", sans-serif;
+      line-height: 1.6;
+      background: var(--body-bg);
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, svg { max-width: 100%; }
+    html { scroll-behavior: smooth; }
+
+    /* ===== Layout ===== */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin-inline: auto;
+      padding: clamp(0.75rem, 2vw, 1.5rem);
+    }
+    h1 {
+      text-align: center;
+      font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
+      color: var(--primary);
+      margin-block: clamp(1rem, 3vw, 2rem);
+    }
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      /* Mobile: 1 column */
+      grid-template-columns: 1fr;
+    }
+    /* Tablet & up: auto-fit columns */
+    @media (min-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+    }
+
+    /* ===== Card ===== */
+    .card {
+      background: var(--card-bg);
+      padding: clamp(1rem, 2vw, 1.5rem);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+    .card h2,
+    .card h3 {
+      margin: 0 0 0.75rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: clamp(1.125rem, 1.2vw + 0.9rem, 1.5rem);
+    }
+
+    /* ===== Lists ===== */
+    ul,
+    ol {
+      padding-left: 1.25rem;
+      margin: 0 0 0.75rem 0;
+    }
+    li { margin-bottom: 0.4rem; }
+    strong { font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 亮點統整</h1>
+
+    <div class="grid">
+      <!-- 點數 -->
+      <section class="card">
+        <h2>📌 <strong>點數</strong></h2>
+        <ul>
+          <li>年度點數達標 → <strong>超標 20%</strong></li>
+          <li><strong>1月~5月(因6月尚未結算) KPI 點數預計:8500 → 實際:10277,超出 1777</strong>
+            <ul>
+              <li>📈 可視為具備良好執行效能與持續投入專案的工作表現</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 專案 -->
+      <section class="card">
+        <h2>📌 <strong>專案</strong></h2>
+        <h3>▶️ <strong>政大專案</strong></h3>
+        <ul>
+          <li>四月中進入專案開始學習 <strong>Vue3 + TypeScript</strong></li>
+          <li><strong>學習方式:</strong>
+            <ol>
+              <li><strong>透過AI (Gpt 、Gemini) 釐清寫法。</strong></li>
+              <li>下班時間抽空Review自己開發的Function</li>
+              <li>學習官網提供的範本並進行測試</li>
+              <li>與身邊RD同仁進行交流</li>
+              <li>透過網路上成功的案例參考與學習</li>
+            </ol>
+          </li>
+          <li>僅花不到一個月就能協助開發並加班支援</li>
+          <li>協助 <strong>PM 需求規劃與邏輯調整 (協同PM 進行功能分析與資料庫關聯分析+需求是否合理設計及順功能邏輯)</strong></li>
+          <li>與其他 RD 進行 <strong>滾動式需求溝通與共同開發</strong></li>
+          <li>僅花 2 個月完成整個系統開發(✅ <strong>如期完成、趕上 deadline</strong>)</li>
+          <li>開發頁面功能 <strong>超過 10 個以上</strong></li>
+        </ul>
+        <h3>▶️ <strong>新聞及輿情系統</strong></h3>
+        <ul>
+          <li>獲得 <strong>水保署駐點與承辦的高度認可與信任</strong></li>
+        </ul>
+      </section>
+
+      <!-- 證照 -->
+      <section class="card">
+        <h2>📌 <strong>證照</strong></h2>
+        <ul>
+          <li>✅ 考取 <strong>IPAS 資訊工程師(初級)認證</strong></li>
+          <li>🎯 下半年度目標:
+            <ul>
+              <li>考取 <strong>IPAS 資安中級證照</strong></li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 部門貢獻 -->
+      <section class="card">
+        <h2>📌 <strong>部門貢獻</strong></h2>
+        <h3>▶️ <strong>開發 IM 管理系統</strong></h3>
+        🎯 目的:拉近 RD 與 PM 的資訊落差,讓團隊彼此分享工作內容、透明協作。
+        <ul>
+          <li>✅ <strong>已開發功能:</strong>
+            <ul>
+              <li><strong>RD 點數計算模組:</strong>
+                <ul>
+                  <li>減少 RD 自行統計流程,<strong>節省約 80% 時間</strong></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>🔧 <strong>後續預計開發功能:</strong>
+            <ul>
+              <li><strong>PM 專案時程表:</strong>
+                <ul>
+                  <li>協助 RD / TPL 明確掌握專案節點,提前人力調配,<strong>避免反覆溝通與誤差</strong></li>
+                </ul>
+              </li>
+              <li><strong>TPL 看板管理 + AI 估點輔助:</strong>
+                <ul>
+                  <li>透過 AI 分析卡片內容進行估點 → <strong>預計可減少 TPL 約 80% 的估點時間</strong></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 自我學習規劃 -->
+      <section class="card">
+        <h2>📚 <strong>自我學習規劃</strong></h2>
+        <ul>
+          <li>持續精進 <strong>Vue3 + TypeScript</strong></li>
+          <li>持續學習從 0 架構專案至可開發階段</li>
+          <li>強化 <strong>Vuetify 應用熟練度</strong></li>
+          <li>強化 <strong>後端與資料庫優化</strong></li>
+          <li>強化 <strong>資安知識與實務操作</strong></li>
+        </ul>
+      </section>
+
+      <!-- 年度總目標 -->
+      <section class="card">
+        <h2>⭐ <strong>年度總目標</strong></h2>
+        精進自我實力、優化部門效率、提升自我價值、超前部署。
+      </section>
+    </div>
+  </div>
+</body>
+</html>
