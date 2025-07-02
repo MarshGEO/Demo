@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Mario Brick Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mario-blue: #5c94fc;
+    --mario-brown: #d97133;
+    --mario-pipe-green: #00a800;
+  }
+
+  body {
+    background-color: var(--mario-blue);
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .world-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the main content vertically */
+  }
+
+  header {
+    position: absolute;
+    top: 30px;
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+  }
+
+  h1 {
+    font-size: 2rem;
+    text-shadow: 4px 4px 0 #000;
+  }
+
+  /* --- Background Elements --- */
+  .clouds {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+  }
+  .cloud {
+    position: absolute;
+    width: 150px; height: 50px; background: white; border: 4px solid black; border-radius: 50px;
+    animation: drift linear infinite;
+  }
+  .cloud::before { content: ''; position: absolute; top: -30px; left: 25px; width: 80px; height: 80px; background: white; border: 4px solid black; border-radius: 50%; }
+  .cloud1 { top: 15%; left: -200px; animation-duration: 50s; }
+  .cloud2 { top: 30%; left: -300px; animation-duration: 65s; animation-delay: -15s; }
+  .cloud3 { top: 70%; left: -250px; animation-duration: 45s; animation-delay: -5s; }
+
+  @keyframes drift {
+    from { transform: translateX(-200px); }
+    to { transform: translateX(100vw); }
+  }
+
+  /* --- Floating Blocks Layout --- */
+  .level-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 128px; /* The gap between the 4-block and 3-block groups */
+    position: relative;
+    z-index: 10;
+  }
+
+  .block-group {
+    display: flex;
+    gap: 32px; /* The gap between individual blocks */
+  }
+
+  .floating-block {
+    width: 128px;
+    height: 128px;
+    border: 4px solid black;
+    box-sizing: border-box;
+    transition: transform 0.1s ease-out;
+    background: var(--mario-brown);
+    padding: 10px;
+  }
+  .floating-block:hover {
+    transform: translateY(-10px);
+  }
+
+  .floating-block img {
+    width: 100%; height: 100%; display: block; cursor: pointer; object-fit: cover;
+  }
+
+  .pipe {
+    position: absolute;
+    bottom: -20px; /* Hide bottom border */
+    width: 128px; height: 160px; background: var(--mario-pipe-green); border: 5px solid black; z-index: 5;
+  }
+  .pipe-top {
+    position: absolute; top: -5px; left: -18px; width: 154px; height: 40px; background: var(--mario-pipe-green); border: 5px solid black; border-radius: 8px;
+  }
+  .pipe1 { left: 10%; }
+  .pipe2 { right: 15%; height: 120px; }
+
+  /* --- Lightbox --- */
+  .lightbox { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+  .lightbox-content { max-width: 85vw; max-height: 85vh; border: 8px solid white; }
+  .close, .prev, .next { cursor: pointer; position: absolute; color: white; font-size: 50px; user-select: none; text-shadow: 3px 3px 0 #000; }
+  .close { top: 20px; right: 40px; }
+  .prev, .next { top: 50%; transform: translateY(-50%); padding: 16px; }
+  .prev { left: 20px; }
+  .next { right: 20px; }
+
+</style>
+</head>
+<body>
+
+  <div class="world-container">
+    <header>
+      <h1>Super Brick Gallery!</h1>
+    </header>
+
+    <div class="clouds">
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
+      <div class="cloud cloud3"></div>
+    </div>
+
+    <div class="level-layout">
+      <div class="block-group">
+        <div class="floating-block"><img src="CE0756CA-0CD3-40BF-B270-E92292E5A532.jpg" class="lightbox-trigger"></div>
+        <div class="floating-block"><img src="A4AA0FD8-1C27-4F3E-8C8B-11D8AF10C129.jpg" class="lightbox-trigger"></div>
+        <div class="floating-block"><img src="812C9DA2-A3F4-4BC8-8923-F423EF1C25FB.jpg" class="lightbox-trigger"></div>
+        <div class="floating-block"><img src="96708E6B-D650-4562-AE33-45BB9DA77553.jpg" class="lightbox-trigger"></div>
+      </div>
+      <div class="block-group">
+        <div class="floating-block"><img src="817A522C-184E-4470-8020-77E8B2D58B7A.jpg" class="lightbox-trigger"></div>
+        <div class="floating-block"><img src="63384D47-B4CA-4DE4-91C6-20DC8CA0CD04.jpg" class="lightbox-trigger"></div>
+        <div class="floating-block"><img src="B50A98B4-0FDB-44BD-B3C1-68F4E06B76C7.jpg" class="lightbox-trigger"></div>
+      </div>
+    </div>
+
+    <!-- Pipes -->
+    <div class="pipe pipe1"><div class="pipe-top"></div></div>
+    <div class="pipe pipe2"><div class="pipe-top"></div></div>
+
+  </div>
+
+  <div id="myLightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <span class="prev">&larr;</span>
+    <span class="next">&rarr;</span>
+    <img class="lightbox-content" id="lightboxImg">
+  </div>
+  
+  <audio id="coin-sound" src="https://www.myinstants.com/media/sounds/mario-coin-sound-effect.mp3" preload="auto"></audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const lightbox = document.getElementById('myLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const images = document.querySelectorAll('.lightbox-trigger');
+    const closeBtn = document.querySelector('.close');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    const coinSound = document.getElementById('coin-sound');
+    let currentIndex = 0;
+
+    function showLightbox(index) {
+        currentIndex = index;
+        lightbox.style.display = 'flex';
+        lightboxImg.src = images[currentIndex].src;
+        coinSound.currentTime = 0;
+        coinSound.play();
+    }
+
+    function hideLightbox() { lightbox.style.display = 'none'; }
+    function showNextImage() { currentIndex = (currentIndex + 1) % images.length; lightboxImg.src = images[currentIndex].src; }
+    function showPrevImage() { currentIndex = (currentIndex - 1 + images.length) % images.length; lightboxImg.src = images[currentIndex].src; }
+
+    images.forEach((img, index) => { img.addEventListener('click', () => showLightbox(index)); });
+
+    closeBtn.addEventListener('click', hideLightbox);
+    nextBtn.addEventListener('click', showNextImage);
+    prevBtn.addEventListener('click', showPrevImage);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) hideLightbox(); });
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.style.display === 'flex') {
+            if (e.key === 'Escape') hideLightbox();
+            else if (e.key === 'ArrowRight') showNextImage();
+            else if (e.key === 'ArrowLeft') showPrevImage();
+        }
+    });
+});
+</script>
+
+</body>
+</html>
