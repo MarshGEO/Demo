@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +12,7 @@
     --mario-blue: #5c94fc;
     --mario-brown: #d97133;
     --mario-pipe-green: #00a800;
+    --ground-height: 100px;
   }
 
   body {
@@ -30,9 +30,6 @@
     height: 100%;
     position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center the main content vertically */
   }
 
   header {
@@ -46,6 +43,17 @@
   h1 {
     font-size: 2rem;
     text-shadow: 4px 4px 0 #000;
+  }
+
+  .controls {
+    position: absolute;
+    top: 80px;
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+    font-size: 0.8rem;
+    color: white;
+    text-shadow: 2px 2px 0 #000;
   }
 
   /* --- Background Elements --- */
@@ -67,19 +75,29 @@
     to { transform: translateX(100vw); }
   }
 
-  /* --- Floating Blocks Layout --- */
+  /* --- Level Layout --- */
+  .level-container {
+    position: absolute;
+    bottom: var(--ground-height);
+    width: 100%;
+    height: calc(100% - var(--ground-height));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .level-layout {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 128px; /* The gap between the 4-block and 3-block groups */
+    gap: 128px;
     position: relative;
     z-index: 10;
   }
 
   .block-group {
     display: flex;
-    gap: 32px; /* The gap between individual blocks */
+    gap: 32px;
   }
 
   .floating-block {
@@ -91,6 +109,16 @@
     background: var(--mario-brown);
     padding: 10px;
   }
+  .floating-block.hit {
+    animation: block-hit 0.2s ease-out;
+  }
+  
+  @keyframes block-hit {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+  }
+
   .floating-block:hover {
     transform: translateY(-10px);
   }
@@ -101,7 +129,7 @@
 
   .pipe {
     position: absolute;
-    bottom: -20px; /* Hide bottom border */
+    bottom: var(--ground-height);
     width: 128px; height: 160px; background: var(--mario-pipe-green); border: 5px solid black; z-index: 5;
   }
   .pipe-top {
@@ -109,6 +137,75 @@
   }
   .pipe1 { left: 10%; }
   .pipe2 { right: 15%; height: 120px; }
+
+  /* --- Ground --- */
+  .ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--ground-height);
+    background: #e69a38;
+    border-top: 8px solid #8c4e00;
+    z-index: 20;
+  }
+
+  /* --- Mario Character --- */
+  #mario {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    left: 50%;
+    z-index: 30;
+    transform: translateX(-50%);
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  /* Mario Sprite States */
+  .mario-sprite {
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgMjQwIDQ4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8IS0tIFN0YW5kaW5nIE1hcmlvIC0tPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9InRyYW5zcGFyZW50Ii8+CjwhLS0gSGF0IC0tPgo8cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIGhlaWdodD0iOCIgZmlsbD0iI0ZGMDAwMCIvPgo8cmVjdCB4PSI0IiB5PSIxNiIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQiIGZpbGw9IiNGRjAwMDAiLz4KPCEtLSBGYWNlIC0tPgo8cmVjdCB4PSIxMiIgeT0iMjAiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiBmaWxsPSIjRkZEQkFDIi8+CjwhLS0gTXVzdGFjaGUgLS0+CjxyZWN0IHg9IjE2IiB5PSIyNCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjQiIGZpbGw9IiM4QjQ1MTMiLz4KPCEtLSBTaGlydCAtLT4KPHJlY3QgeD0iOCIgeT0iMjgiIHdpZHRoPSIzMiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzAwODBGRiIvPgo8IS0tIE92ZXJhbGxzIC0tPgo8cmVjdCB4PSIxMiIgeT0iNDAiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDA0MEZGIi8+Cgo8IS0tIFdhbGtpbmcgRnJhbWUgMSAtLT4KPHJlY3QgeD0iNDgiIHk9IjAiIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgZmlsbD0idHJhbnNwYXJlbnQiLz4KPHJlY3QgeD0iNTYiIHk9IjgiIHdpZHRoPSIzMiIgaGVpZ2h0PSI4IiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHg9IjUyIiB5PSIxNiIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQiIGZpbGw9IiNGRjAwMDAiLz4KPHJlY3QgeD0iNjAiIHk9IjIwIiB3aWR0aD0iMjQiIGhlaWdodD0iOCIgZmlsbD0iI0ZGREJBQyIvPgo8cmVjdCB4PSI2NCIgeT0iMjQiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0IiBmaWxsPSIjOEI0NTEzIi8+CjxyZWN0IHg9IjU2IiB5PSIyOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjMDA4MEZGIi8+CjxyZWN0IHg9IjU2IiB5PSI0MCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjgiIGZpbGw9IiMwMDQwRkYiLz4KPHJlY3QgeD0iODAiIHk9IjQwIiB3aWR0aD0iMTIiIGhlaWdodD0iOCIgZmlsbD0iIzAwNDBGRiIvPgoKPCEtLSBXYWxraW5nIEZyYW1lIDIgLS0+CjxyZWN0IHg9Ijk2IiB5PSIwIiB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9InRyYW5zcGFyZW50Ii8+CjxyZWN0IHg9IjEwNCIgeT0iOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjgiIGZpbGw9IiNGRjAwMDAiLz4KPHJlY3QgeD0iMTAwIiB5PSIxNiIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQiIGZpbGw9IiNGRjAwMDAiLz4KPHJlY3QgeD0iMTA4IiB5PSIyMCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjgiIGZpbGw9IiNGRkRCQUMiLz4KPHJlY3QgeD0iMTEyIiB5PSIyNCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjQiIGZpbGw9IiM4QjQ1MTMiLz4KPHJlY3QgeD0iMTA0IiB5PSIyOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjMDA4MEZGIi8+CjxyZWN0IHg9IjEwOCIgeT0iNDAiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDA0MEZGIi8+Cgo8IS0tIFdhbGtpbmcgRnJhbWUgMyAtLT4KPHJlY3QgeD0iMTQ0IiB5PSIwIiB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9InRyYW5zcGFyZW50Ii8+CjxyZWN0IHg9IjE1MiIgeT0iOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjgiIGZpbGw9IiNGRjAwMDAiLz4KPHJlY3QgeD0iMTQ4IiB5PSIxNiIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQiIGZpbGw9IiNGRjAwMDAiLz4KPHJlY3QgeD0iMTU2IiB5PSIyMCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjgiIGZpbGw9IiNGRkRCQUMiLz4KPHJlY3QgeD0iMTYwIiB5PSIyNCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjQiIGZpbGw9IiM4QjQ1MTMiLz4KPHJlY3QgeD0iMTUyIiB5PSIyOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjMDA4MEZGIi8+CjxyZWN0IHg9IjE2MCIgeT0iNDAiIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiMwMDQwRkYiLz4KPHJlY3QgeD0iMTc2IiB5PSI0MCIgd2lkdGg9IjgiIGhlaWdodD0iOCIgZmlsbD0iIzAwNDBGRiIvPgoKPCEtLSBKdW1waW5nIEZyYW1lIC0tPgo8cmVjdCB4PSIxOTIiIHk9IjAiIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgZmlsbD0idHJhbnNwYXJlbnQiLz4KPHJlY3QgeD0iMjAwIiB5PSI4IiB3aWR0aD0iMzIiIGhlaWdodD0iOCIgZmlsbD0iI0ZGMDAwMCIvPgo8cmVjdCB4PSIxOTYiIHk9IjE2IiB3aWR0aD0iNDAiIGhlaWdodD0iNCIgZmlsbD0iI0ZGMDAwMCIvPgo8cmVjdCB4PSIyMDQiIHk9IjIwIiB3aWR0aD0iMjQiIGhlaWdodD0iOCIgZmlsbD0iI0ZGREJBQyIvPgo8cmVjdCB4PSIyMDgiIHk9IjI0IiB3aWR0aD0iMTYiIGhlaWdodD0iNCIgZmlsbD0iIzhCNDUxMyIvPgo8cmVjdCB4PSIyMDAiIHk9IjI4IiB3aWR0aD0iMzIiIGhlaWdodD0iMTIiIGZpbGw9IiMwMDgwRkYiLz4KPHJlY3QgeD0iMTk2IiB5PSI0MCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjgiIGZpbGw9IiMwMDQwRkYiLz4KPHJlY3QgeD0iMjI4IiB5PSI0MCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjgiIGZpbGw9IiMwMDQwRkYiLz4KPC9zdmc+');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: 240px 48px;
+  }
+
+  /* Mario Animation States */
+  #mario.standing .mario-sprite {
+    background-position: 0 0;
+  }
+
+  #mario.walking .mario-sprite {
+    animation: mario-walk 0.4s steps(3) infinite;
+  }
+
+  #mario.jumping .mario-sprite {
+    background-position: -192px 0;
+  }
+
+  #mario.facing-left .mario-sprite {
+    transform: scaleX(-1);
+  }
+
+  @keyframes mario-walk {
+    0% { background-position: -48px 0; }
+    33% { background-position: -96px 0; }
+    66% { background-position: -144px 0; }
+    100% { background-position: -48px 0; }
+  }
+
+  /* Mario visual effects */
+  #mario.hit {
+    animation: mario-hit 0.1s ease-out;
+  }
+
+  @keyframes mario-hit {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-3px); }
+  }
 
   /* --- Lightbox --- */
   .lightbox { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
@@ -134,23 +231,33 @@
       <div class="cloud cloud3"></div>
     </div>
 
-    <div class="level-layout">
-      <div class="block-group">
-        <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Andrew.jpg" class="lightbox-trigger"></div>
-        <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Jay.jpg" class="lightbox-trigger"></div>
-        <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Joey.jpg" class="lightbox-trigger"></div>
-        <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Leo.jpg" class="lightbox-trigger"></div>
-      </div>
-      <div class="block-group">
-        <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Marsh.jpg" class="lightbox-trigger"></div>
-        <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Night.jpg" class="lightbox-trigger"></div>
-        <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Willy.jpg" class="lightbox-trigger"></div>
+    <div class="level-container">
+      <div class="level-layout">
+        <div class="block-group">
+          <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Andrew.jpg" class="lightbox-trigger"></div>
+          <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Jay.jpg" class="lightbox-trigger"></div>
+          <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Joey.jpg" class="lightbox-trigger"></div>
+          <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Leo.jpg" class="lightbox-trigger"></div>
+        </div>
+        <div class="block-group">
+          <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Marsh.jpg" class="lightbox-trigger"></div>
+          <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Night.jpg" class="lightbox-trigger"></div>
+          <div class="floating-block"><img src="https://marshgeo.github.io/Demo/SuperSnack/Willy.jpg" class="lightbox-trigger"></div>
+        </div>
       </div>
     </div>
 
     <!-- Pipes -->
     <div class="pipe pipe1"><div class="pipe-top"></div></div>
     <div class="pipe pipe2"><div class="pipe-top"></div></div>
+
+    <!-- Ground -->
+    <div class="ground"></div>
+
+    <!-- Player -->
+    <div id="mario">
+      <div class="mario-sprite"></div>
+    </div>
 
   </div>
 
@@ -160,26 +267,66 @@
     <span class="next">&rarr;</span>
     <img class="lightbox-content" id="lightboxImg">
   </div>
-  
-  <audio id="coin-sound" src="https://www.myinstants.com/media/sounds/mario-coin-sound-effect.mp3" preload="auto"></audio>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Create coin sound effect using Web Audio API
+    let audioContext;
+    function createCoinSound() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime); // E5
+        oscillator.frequency.setValueAtTime(1318.51, audioContext.currentTime + 0.1); // E6
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.3);
+    }
+
+    function createJumpSound() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+        
+        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.2);
+    }
+
+    // Lightbox elements and logic
     const lightbox = document.getElementById('myLightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const images = document.querySelectorAll('.lightbox-trigger');
+    const blocks = document.querySelectorAll('.floating-block');
     const closeBtn = document.querySelector('.close');
     const prevBtn = document.querySelector('.prev');
     const nextBtn = document.querySelector('.next');
-    const coinSound = document.getElementById('coin-sound');
     let currentIndex = 0;
 
     function showLightbox(index) {
         currentIndex = index;
         lightbox.style.display = 'flex';
         lightboxImg.src = images[currentIndex].src;
-        coinSound.currentTime = 0;
-        coinSound.play();
+        createCoinSound();
     }
 
     function hideLightbox() { lightbox.style.display = 'none'; }
@@ -192,13 +339,161 @@ document.addEventListener('DOMContentLoaded', function() {
     nextBtn.addEventListener('click', showNextImage);
     prevBtn.addEventListener('click', showPrevImage);
     lightbox.addEventListener('click', (e) => { if (e.target === lightbox) hideLightbox(); });
+    
+    // --- Game Logic ---
+    const mario = document.getElementById('mario');
+    const groundHeight = 100;
+
+    // Player state
+    let playerX = mario.offsetLeft;
+    let velocityX = 0;
+    let velocityY = 0;
+    let isJumping = false;
+    const speed = 5;
+    const jumpPower = 30;
+    const gravity = 0.98;
+
+    // Set initial Y position
+    let playerY = window.innerHeight - 56 - groundHeight;
+    mario.style.top = `${playerY}px`;
+
+    const keys = {
+        ArrowLeft: false,
+        ArrowRight: false
+    };
+
+    let currentDirection = 'right';
+    let isWalking = false;
+
+    function updateMarioState() {
+        // Clear all state classes
+        mario.classList.remove('standing', 'walking', 'jumping', 'facing-left');
+        
+        // Set direction
+        if (currentDirection === 'left') {
+            mario.classList.add('facing-left');
+        }
+        
+        // Set animation state
+        if (isJumping) {
+            mario.classList.add('jumping');
+        } else if (isWalking) {
+            mario.classList.add('walking');
+        } else {
+            mario.classList.add('standing');
+        }
+    }
+
+    function gameLoop() {
+        // Handle horizontal movement
+        isWalking = false;
+        if (keys.ArrowLeft) {
+            velocityX = -speed;
+            currentDirection = 'left';
+            isWalking = true;
+        } else if (keys.ArrowRight) {
+            velocityX = speed;
+            currentDirection = 'right';
+            isWalking = true;
+        } else {
+            velocityX = 0;
+        }
+        playerX += velocityX;
+
+        // Apply gravity
+        velocityY -= gravity;
+        playerY -= velocityY;
+
+        // Ground collision
+        const groundLevel = window.innerHeight - mario.offsetHeight - groundHeight;
+        if (playerY > groundLevel) {
+            playerY = groundLevel;
+            velocityY = 0;
+            isJumping = false;
+        }
+        
+        // Boundary checks
+        if (playerX < 0) playerX = 0;
+        if (playerX > window.innerWidth - mario.offsetWidth) {
+            playerX = window.innerWidth - mario.offsetWidth;
+        }
+
+        // Block collision detection
+        if (velocityY > 0) { // Only check when moving up
+            blocks.forEach((block, index) => {
+                const blockRect = block.getBoundingClientRect();
+                const marioRect = {
+                    left: playerX,
+                    right: playerX + mario.offsetWidth,
+                    top: playerY,
+                    bottom: playerY + mario.offsetHeight
+                };
+
+                // Check if Mario's head hits the bottom of a block
+                if (
+                    marioRect.left < blockRect.right &&
+                    marioRect.right > blockRect.left &&
+                    marioRect.top < blockRect.bottom &&
+                    marioRect.top > blockRect.top - 20 // Small tolerance for block hitting
+                ) {
+                    velocityY = -5; // Bounce down slightly
+                    if (!block.classList.contains('hit')) {
+                        block.classList.add('hit');
+                        mario.classList.add('hit');
+                        showLightbox(index);
+                        setTimeout(() => {
+                            block.classList.remove('hit');
+                            mario.classList.remove('hit');
+                        }, 200);
+                    }
+                }
+            });
+        }
+
+        // Update Mario's visual state
+        updateMarioState();
+
+        // Update player position
+        mario.style.left = `${playerX}px`;
+        mario.style.top = `${playerY}px`;
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    // Keyboard event listeners
     document.addEventListener('keydown', (e) => {
         if (lightbox.style.display === 'flex') {
             if (e.key === 'Escape') hideLightbox();
             else if (e.key === 'ArrowRight') showNextImage();
             else if (e.key === 'ArrowLeft') showPrevImage();
+            return;
+        }
+
+        if (e.key in keys) {
+            keys[e.key] = true;
+        }
+        if (e.key === 'ArrowUp' && !isJumping) {
+            velocityY = jumpPower;
+            isJumping = true;
+            createJumpSound();
         }
     });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key in keys) {
+            keys[e.key] = false;
+        }
+    });
+
+    // Initialize audio context on first user interaction
+    document.addEventListener('click', () => {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+    }, { once: true });
+
+    // Start the game
+    requestAnimationFrame(gameLoop);
 });
 </script>
 
