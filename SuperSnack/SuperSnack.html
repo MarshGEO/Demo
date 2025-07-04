@@ -216,6 +216,52 @@
   .prev { left: 20px; }
   .next { right: 20px; }
 
+  /* --- Speech Bubble --- */
+  .speech-bubble {
+    position: fixed;
+    background: white;
+    color: black;
+    padding: 12px 16px;
+    border-radius: 15px;
+    border: 3px solid black;
+    font-size: 14px;
+    max-width: 200px;
+    z-index: 50;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+    transition: all 0.3s ease-out;
+    word-wrap: break-word;
+  }
+
+  .speech-bubble.show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+  }
+
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 17px;
+    width: 0;
+    height: 0;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-top: 13px solid black;
+  }
 </style>
 </head>
 <body>
@@ -258,6 +304,9 @@
     <div id="mario">
       <div class="mario-sprite"></div>
     </div>
+
+    <!-- Speech Bubble -->
+    <div id="speechBubble" class="speech-bubble"></div>
 
   </div>
 
@@ -366,6 +415,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentDirection = 'right';
     let isWalking = false;
+
+    // Speech bubble system
+    const speechBubble = document.getElementById('speechBubble');
+    const speechTexts = [
+        "今天天氣真不錯！",
+        "這些磚塊看起來很有趣...",
+        "我想知道水管裡面有什麼？",
+        "跳躍讓我感覺很自由！",
+        "這個世界真是太棒了！",
+        "我需要收集更多金幣！",
+        "左邊還是右邊好呢？",
+        "這些雲朵看起來很舒服...",
+        "我餓了，有蘑菇嗎？",
+        "探險總是令人興奮！",
+        "這裡的風景很美！",
+        "我想念我的朋友們...",
+        "今天是冒險的好日子！",
+        "這些管道通往哪裡呢？",
+        "跳跳跳，真開心！"
+    ];
+    
+    let speechTimer;
+    
+    function showRandomSpeech() {
+        const randomText = speechTexts[Math.floor(Math.random() * speechTexts.length)];
+        speechBubble.textContent = randomText;
+        
+        // Position bubble relative to Mario
+        const marioRect = mario.getBoundingClientRect();
+        speechBubble.style.left = (marioRect.right + 10) + 'px';
+        speechBubble.style.top = (marioRect.top - 60) + 'px';
+        
+        // Show bubble with animation
+        speechBubble.classList.add('show');
+        
+        // Hide after 8 seconds
+        setTimeout(() => {
+            speechBubble.classList.remove('show');
+        }, 8000);
+    }
+    
+    function startSpeechSystem() {
+        // Show first speech after 2 seconds
+        setTimeout(() => {
+            showRandomSpeech();
+        }, 2000);
+        
+        // Then show new speech every 10 seconds
+        speechTimer = setInterval(() => {
+            showRandomSpeech();
+        }, 10000);
+    }
 
     function updateMarioState() {
         // Clear all state classes
@@ -649,6 +750,13 @@ document.addEventListener('DOMContentLoaded', function() {
         mario.style.left = `${playerX}px`;
         mario.style.top = `${playerY}px`;
 
+        // Update speech bubble position
+        if (speechBubble.classList.contains('show')) {
+            const marioRect = mario.getBoundingClientRect();
+            speechBubble.style.left = (marioRect.right + 10) + 'px';
+            speechBubble.style.top = (marioRect.top - 60) + 'px';
+        }
+
         requestAnimationFrame(gameLoop);
     }
 
@@ -686,6 +794,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Start the game
     requestAnimationFrame(gameLoop);
+    
+    // Start speech system
+    startSpeechSystem();
 });
 </script>
 
