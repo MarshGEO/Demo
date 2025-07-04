@@ -100,31 +100,46 @@
     gap: 2px;
   }
 
+  /* --- 磚塊樣式 --- */
   .floating-block {
     width: 128px;
     height: 128px;
     border: 4px solid black;
     box-sizing: border-box;
     transition: transform 0.1s ease-out;
-    background: var(--mario-brown);
+    background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
     padding: 10px;
-  }
-  .floating-block.hit {
-    animation: block-hit 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
   }
   
-  @keyframes block-hit {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-    100% { transform: translateY(0); }
+  /* 問號方塊樣式 */
+  .floating-block::before {
+    content: '?';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 3px 3px 0 #000;
+    font-family: 'Press Start 2P', cursive;
+    z-index: 1;
   }
-
-  .floating-block:hover {
-    transform: translateY(-10px);
+  
+  /* 撞擊後隱藏問號 */
+  .floating-block.hit::before {
+    display: none;
   }
-
+  .floating-block.hit img {
+    opacity: 1;
+    pointer-events: auto;
+  }
   .floating-block img {
     width: 100%; height: 100%; display: block; cursor: pointer; object-fit: cover;
+    position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
   }
 
   .pipe {
@@ -364,7 +379,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Lightbox elements and logic
     const lightbox = document.getElementById('myLightbox');
     const lightboxImg = document.getElementById('lightboxImg');
-    const images = document.querySelectorAll('.lightbox-trigger');
+    // 先收集所有圖片src
+    const imageSrcs = [
+      "https://marshgeo.github.io/Demo/SuperSnack/Andrew.jpg",
+      "https://marshgeo.github.io/Demo/SuperSnack/Jay.jpg",
+      "https://marshgeo.github.io/Demo/SuperSnack/Joey.jpg",
+      "https://marshgeo.github.io/Demo/SuperSnack/Leo.jpg",
+      "https://marshgeo.github.io/Demo/SuperSnack/Marsh.jpg",
+      "https://marshgeo.github.io/Demo/SuperSnack/Night.jpg",
+      "https://marshgeo.github.io/Demo/SuperSnack/Willy.jpg"
+    ];
     const blocks = document.querySelectorAll('.floating-block');
     const closeBtn = document.querySelector('.close');
     const prevBtn = document.querySelector('.prev');
@@ -374,15 +398,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function showLightbox(index) {
         currentIndex = index;
         lightbox.style.display = 'flex';
-        lightboxImg.src = images[currentIndex].src;
+        lightboxImg.src = imageSrcs[currentIndex];
         createCoinSound();
     }
 
     function hideLightbox() { lightbox.style.display = 'none'; }
-    function showNextImage() { currentIndex = (currentIndex + 1) % images.length; lightboxImg.src = images[currentIndex].src; }
-    function showPrevImage() { currentIndex = (currentIndex - 1 + images.length) % images.length; lightboxImg.src = images[currentIndex].src; }
+    function showNextImage() { currentIndex = (currentIndex + 1) % imageSrcs.length; lightboxImg.src = imageSrcs[currentIndex]; }
+    function showPrevImage() { currentIndex = (currentIndex - 1 + imageSrcs.length) % imageSrcs.length; lightboxImg.src = imageSrcs[currentIndex]; }
 
-    images.forEach((img, index) => { img.addEventListener('click', () => showLightbox(index)); });
+    // images.forEach((img, index) => { img.addEventListener('click', () => showLightbox(index)); });
 
     closeBtn.addEventListener('click', hideLightbox);
     nextBtn.addEventListener('click', showNextImage);
@@ -721,7 +745,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     top: playerY,
                     bottom: playerY + mario.offsetHeight
                 };
-
                 // Check if Mario's head hits the bottom of a block
                 if (
                     marioRect.left < blockRect.right &&
@@ -733,9 +756,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!block.classList.contains('hit')) {
                         block.classList.add('hit');
                         mario.classList.add('hit');
+                        // 動態插入圖片
+                        if (!block.querySelector('img')) {
+                          const img = document.createElement('img');
+                          img.src = imageSrcs[index];
+                          img.className = 'lightbox-trigger';
+                          img.addEventListener('click', () => showLightbox(index));
+                          block.appendChild(img);
+                          // 立即顯示
+                          setTimeout(() => { img.style.opacity = 1; }, 10);
+                        }
                         showLightbox(index);
+                        // 只移除 Mario 的 hit 效果，保留磚塊的 hit 狀態
                         setTimeout(() => {
-                            block.classList.remove('hit');
                             mario.classList.remove('hit');
                         }, 200);
                     }
@@ -791,6 +824,9 @@ document.addEventListener('DOMContentLoaded', function() {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
     }, { once: true });
+
+    // 頁面載入時移除所有block內的img
+    blocks.forEach(block => { while (block.firstChild) block.removeChild(block.firstChild); });
 
     // Start the game
     requestAnimationFrame(gameLoop);
