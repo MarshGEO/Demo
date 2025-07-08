@@ -277,13 +277,120 @@
     border-right: 13px solid transparent;
     border-top: 13px solid black;
   }
+
+  /* --- 太陽樣式 --- */
+  .sun {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #ffeb3b 0%, #ffc107 50%, #ff9800 100%);
+    border-radius: 50%;
+    border: 4px solid #ff8f00;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+  }
+  
+  .sun:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.8);
+  }
+  
+  /* 太陽光線效果 */
+  .sun::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 240px;
+    height: 240px;
+    background: 
+      linear-gradient(0deg, transparent 45%, rgba(255, 235, 59, 0.8) 50%, transparent 55%),
+      linear-gradient(45deg, transparent 45%, rgba(255, 235, 59, 0.6) 50%, transparent 55%),
+      linear-gradient(90deg, transparent 45%, rgba(255, 235, 59, 0.8) 50%, transparent 55%),
+      linear-gradient(135deg, transparent 45%, rgba(255, 235, 59, 0.6) 50%, transparent 55%),
+      linear-gradient(180deg, transparent 45%, rgba(255, 235, 59, 0.8) 50%, transparent 55%),
+      linear-gradient(225deg, transparent 45%, rgba(255, 235, 59, 0.6) 50%, transparent 55%),
+      linear-gradient(270deg, transparent 45%, rgba(255, 235, 59, 0.8) 50%, transparent 55%),
+      linear-gradient(315deg, transparent 45%, rgba(255, 235, 59, 0.6) 50%, transparent 55%);
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: none;
+  }
+  
+  .sun.active::before {
+    opacity: 1;
+    animation: sun-rays 2s ease-in-out;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  
+  .sun::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    background: repeating-conic-gradient(
+      from 0deg at 50% 50%, 
+      transparent 0deg, 
+      rgba(255, 235, 59, 0.3) 15deg, 
+      transparent 30deg
+    );
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  
+  .sun.active::after {
+    opacity: 1;
+    animation: sun-glow 2s ease-in-out;
+  }
+  
+  @keyframes sun-rays {
+    0%, 100% { 
+      transform: translate(-50%, -50%) rotate(0deg) scale(0.8);
+      opacity: 0;
+    }
+    50% { 
+      transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes sun-glow {
+    0%, 100% { 
+      opacity: 0;
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    50% { 
+      opacity: 0.8;
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+  
+  /* 音樂狀態指示 */
+  .sun.music-on {
+    box-shadow: 0 0 30px rgba(255, 193, 7, 1), 0 0 40px rgba(255, 152, 0, 0.5);
+  }
 </style>
 </head>
 <body>
-  <audio id="bgm" src="https://marshgeo.github.io/Demo/SuperSnack/無敵星星BGM.mp3" autoplay loop hidden></audio>
+  <audio id="bgm" src="https://marshgeo.github.io/Demo/SuperSnack/無敵星星BGM.mp3" loop hidden></audio>
   <div class="world-container">
+    <!-- 太陽 -->
+    <div class="sun" id="sun" title="點擊控制背景音樂"></div>
+    
     <header>
       <h1>Super IM Technical Team!</h1>
+      <div class="controls">
+        方向鍵移動 | ↑跳躍 | ↓進入水管傳送 | 點擊太陽開關音樂
+      </div>
     </header>
 
     <div class="clouds">
@@ -434,11 +541,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const keys = {
         ArrowLeft: false,
-        ArrowRight: false
+        ArrowRight: false,
+        ArrowDown: false
     };
 
     let currentDirection = 'right';
     let isWalking = false;
+    let isWarping = false; // 水管傳送狀態
 
     // Speech bubble system
     const speechBubble = document.getElementById('speechBubble');
@@ -690,7 +799,89 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     }
 
+    function isOnPipeTop(pipeSelector) {
+        const pipe = document.querySelector(pipeSelector);
+        if (!pipe) return false;
+        
+        const pipeRect = pipe.getBoundingClientRect();
+        const marioRect = {
+            left: playerX,
+            right: playerX + mario.offsetWidth,
+            top: playerY,
+            bottom: playerY + mario.offsetHeight
+        };
+        
+        // 檢查 Mario 是否站在水管頂部
+        const pipeTopY = pipeRect.top;
+        return (
+            marioRect.bottom >= pipeTopY - 5 &&
+            marioRect.bottom <= pipeTopY + 15 &&
+            marioRect.right > pipeRect.left + 10 &&
+            marioRect.left < pipeRect.right - 10
+        );
+    }
+    
+    function warpThroughPipe() {
+        if (isWarping) return; // 防止重複觸發
+        
+        const pipe1 = document.querySelector('.pipe1');
+        const pipe2 = document.querySelector('.pipe2');
+        
+        if (isOnPipeTop('.pipe1')) {
+            // 從左邊水管進入，從右邊水管出來
+            isWarping = true;
+            createJumpSound(); // 進入音效
+            
+            // 下降動畫 - 設置 Mario 在水管後面
+            const originalY = playerY;
+            mario.style.zIndex = '1'; // 將 Mario 移到水管後面 (水管 z-index: 5)
+            
+            const downAnimation = setInterval(() => {
+                playerY += 3;
+                mario.style.top = `${playerY}px`;
+                
+                // 當 Mario 完全進入水管後
+                if (playerY > originalY + 60) {
+                    clearInterval(downAnimation);
+                    
+                    // 立即移動到右邊水管位置
+                    const pipe2Rect = pipe2.getBoundingClientRect();
+                    playerX = pipe2Rect.left + (pipe2Rect.width / 2) - (mario.offsetWidth / 2);
+                    playerY = pipe2Rect.top - mario.offsetHeight;
+                    mario.style.left = `${playerX}px`;
+                    mario.style.top = `${playerY}px`;
+                    
+                    // 上升動畫 - Mario 從水管中出現，先在後面然後到前面
+                    createCoinSound(); // 出現音效
+                    const upAnimation = setInterval(() => {
+                        playerY -= 3;
+                        mario.style.top = `${playerY}px`;
+                        
+                        // 當 Mario 出現到水管頂部時，恢復正常 z-index
+                        if (playerY <= pipe2Rect.top - mario.offsetHeight + 20) {
+                            mario.style.zIndex = '30'; // 恢復 Mario 的正常 z-index
+                        }
+                        
+                        // 當 Mario 完全出現後
+                        if (playerY <= pipe2Rect.top - mario.offsetHeight) {
+                            clearInterval(upAnimation);
+                            isWarping = false;
+                            velocityY = 0;
+                        }
+                    }, 30);
+                }
+            }, 30);
+        }
+    }
+
     function gameLoop() {
+        // 如果正在傳送，跳過正常的物理邏輯
+        if (isWarping) {
+            updateMarioState();
+            requestAnimationFrame(gameLoop);
+            return;
+        }
+        
         // Handle horizontal movement
         isWalking = false;
         if (keys.ArrowLeft) {
@@ -783,6 +974,19 @@ document.addEventListener('DOMContentLoaded', function() {
         mario.style.left = `${playerX}px`;
         mario.style.top = `${playerY}px`;
 
+        // 檢查是否在水管上，顯示提示
+        if (isOnPipeTop('.pipe1')) {
+            if (!speechBubble.classList.contains('show') || !speechBubble.textContent.includes('按下鍵')) {
+                speechBubble.textContent = '按下鍵進入水管！';
+                const marioRect = mario.getBoundingClientRect();
+                speechBubble.style.left = (marioRect.right + 10) + 'px';
+                speechBubble.style.top = (marioRect.top - 60) + 'px';
+                speechBubble.classList.add('show');
+            }
+        } else if (speechBubble.textContent.includes('按下鍵')) {
+            speechBubble.classList.remove('show');
+        }
+
         // Update speech bubble position
         if (speechBubble.classList.contains('show')) {
             const marioRect = mario.getBoundingClientRect();
@@ -810,6 +1014,9 @@ document.addEventListener('DOMContentLoaded', function() {
             isJumping = true;
             createJumpSound();
         }
+        if (e.key === 'ArrowDown' && !isWarping) {
+            warpThroughPipe();
+        }
     });
 
     document.addEventListener('keyup', (e) => {
@@ -827,6 +1034,59 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 頁面載入時移除所有block內的img
     blocks.forEach(block => { while (block.firstChild) block.removeChild(block.firstChild); });
+
+    // 太陽和背景音樂控制
+    const sun = document.getElementById('sun');
+    const bgm = document.getElementById('bgm');
+    let isMusicPlaying = false;
+    
+    function toggleMusic() {
+        if (isMusicPlaying) {
+            bgm.pause();
+            sun.classList.remove('music-on');
+            isMusicPlaying = false;
+        } else {
+            bgm.play().catch(e => {
+                console.log('無法播放音樂：', e);
+            });
+            sun.classList.add('music-on');
+            isMusicPlaying = true;
+        }
+        
+        // 觸發太陽光線效果
+        sun.classList.add('active');
+        setTimeout(() => {
+            sun.classList.remove('active');
+        }, 2000);
+    }
+    
+    sun.addEventListener('click', toggleMusic);
+    
+    // 創建太陽音效
+    function createSunSound() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        // 創建太陽般溫暖的音效
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.4);
+    }
+    
+    // 為太陽點擊添加音效
+    sun.addEventListener('click', createSunSound);
 
     // Start the game
     requestAnimationFrame(gameLoop);
