@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年中績效面談 - Andrewliu</title>
+    <!-- 引入 Tailwind CSS 打造現代化 UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans TC', 'JetBrains Mono', sans-serif;
+            background-color: #0b0f19;
+        }
+        .slide {
+            display: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .code-box {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+        }
+    </style>
+</head>
+<body class="text-slate-200 overflow-hidden h-screen flex flex-col justify-between p-8 relative">
+
+    <!-- 背景科技裝飾線 -->
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500"></div>
+
+    <!-- 頂部 Header -->
+    <div class="flex justify-between items-center border-b border-slate-800 pb-4 z-10">
+        <div class="flex items-center space-x-3">
+            <span class="px-3 py-1 bg-slate-800 border border-slate-700 rounded-md text-xs font-mono text-emerald-400">v2.0.26</span>
+            <h1 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">2026 Mid-Year Performance Review</h1>
+        </div>
+        <div class="text-sm font-mono text-slate-500">Andrewliu | 網頁工程師</div>
+    </div>
+
+    <!-- 投影片容器 -->
+    <div class="flex-grow flex items-center justify-center my-auto z-10">
+        
+        <!-- SLIDE 1: 封面 -->
+        <div class="slide active flex-col items-center justify-center text-center space-y-6 max-w-4xl w-full">
+            <div class="space-y-2">
+                <span class="text-emerald-400 font-mono tracking-widest text-sm uppercase">Performance Review</span>
+                <h2 class="text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    2026 年中績效面談 <br><span class="gradient-text">技術成長與 AI 工作流創新</span>
+                </h2>
+            </div>
+            <p class="text-slate-400 max-w-md mx-auto text-base">
+                聚焦於核心專案交付、AI 工具深度整合、工程資產模組化以及全端維運能力的突破。
+            </p>
+            <div class="pt-6 flex justify-center space-x-8 text-sm font-mono text-slate-400 bg-slate-900/50 border border-slate-800/80 px-6 py-3 rounded-xl">
+                <div>面談同仁: <span class="text-white font-sans font-medium">Andrewliu</span></div>
+                <div class="text-slate-700">|</div>
+                <div>職稱: <span class="text-white font-sans font-medium">網頁工程師</span></div>
+                <div class="text-slate-700">|</div>
+                <div>日期: <span class="text-white font-sans font-medium">2026.06.18</span></div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: 上半年核心成果 - 專案交付 -->
+        <div class="slide flex-col justify-center space-y-6 max-w-5xl w-full">
+            <div class="border-l-4 border-emerald-500 pl-4">
+                <h3 class="text-2xl font-bold text-white">01. 上半年核心成果：專案開發與交付</h3>
+                <p class="text-sm text-slate-400">核心開發、線上維運與前期規格收斂</p>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-6">
+                <div class="code-box p-5 rounded-xl space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-base font-bold text-white">桃園好農</span>
+                        <span class="text-xs px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded border border-emerald-500/20 font-mono">核心開發</span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-mono">預計 7 月上線 / 密集開發中</p>
+                    <ul class="text-sm text-slate-300 space-y-1 list-disc list-inside">
+                        <li>主導核心商業邏輯模組</li>
+                        <li>實作<span class="text-emerald-400 font-medium">優惠券</span>與<span class="text-emerald-400 font-medium">活動管理</span></li>
+                        <li>完成<span class="text-emerald-400 font-medium">物流</span>與<span class="text-emerald-400 font-medium">金流</span>系統串接</li>
+                    </ul>
+                </div>
+
+                <div class="code-box p-5 rounded-xl space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-base font-bold text-white">桃園好農遊</span>
+                        <span class="text-xs px-2 py-0.5 bg-blue-500/10 text-blue-400 rounded border border-blue-500/20 font-mono">維運客服</span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-mono">第一線問題排查與修復</p>
+                    <ul class="text-sm text-slate-300 space-y-1 list-disc list-inside">
+                        <li>即時解決線上衍生技術問題</li>
+                        <li>實戰補齊 <span class="text-blue-400 font-mono">PHP 語法</span></li>
+                        <li>精進 <span class="text-blue-400 font-mono">Linux 伺服器</span>環境操作</li>
+                    </ul>
+                </div>
+
+                <div class="code-box p-5 rounded-xl space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-base font-bold text-white">國合會</span>
+                        <span class="text-xs px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded border border-purple-500/20 font-mono">前期籌備</span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-mono">預計 11 月上線 / 架構規劃</p>
+                    <ul class="text-sm text-slate-300 space-y-1 list-disc list-inside">
+                        <li>梳理規格，精準定義主色系</li>
+                        <li>規劃共通 UI 基礎組件</li>
+                        <li>產出<span class="text-purple-400 font-medium">前端通用範本</span>提升效率</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: 上半年核心成果 - AI 流程創新 -->
+        <div class="slide flex-col justify-center space-y-6 max-w-5xl w-full">
+            <div class="border-l-4 border-emerald-500 pl-4">
+                <h3 class="text-2xl font-bold text-white">02. 上半年核心成果：AI 流程創新與品質優化</h3>
+                <p class="text-sm text-slate-400">拒絕盲目敲代碼，用 AI 提高產出上限與系統良率</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <div class="code-box p-6 rounded-xl flex space-x-4 items-start">
+                    <div class="p-3 bg-emerald-500/10 rounded-lg text-emerald-400 text-xl font-mono">01</div>
+                    <div class="space-y-2">
+                        <h4 class="text-base font-bold text-white">Claude Code (Plan Mode) 雙軌開發</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            熟練運用 Plan Mode。開發複雜邏輯前，先由 AI 產出架構與細節設計，經人工審查、調整架構後再行執行。大幅縮短思路轉換時間，倍增開發效率。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="code-box p-6 rounded-xl flex space-x-4 items-start">
+                    <div class="p-3 bg-cyan-500/10 rounded-lg text-cyan-400 text-xl font-mono">02</div>
+                    <div class="space-y-2">
+                        <h4 class="text-base font-bold text-white">自製 AI QA 測試人員 Prompt</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            針對《桃園好農》開發，自製測試專用 Prompt 進行深度邊界條件（Edge Case）雙重驗證。主動攔截未注意到的功能細節，自主提升交付良率。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="code-box p-6 rounded-xl flex space-x-4 items-start col-span-2 border-emerald-500/30 bg-gradient-to-r from-slate-900 to-emerald-950/20">
+                    <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400 text-xl font-mono">★</div>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <h4 class="text-base font-bold text-white">引進 Gemini 智慧專案分析與可視化報告</h4>
+                            <span class="text-[10px] uppercase font-mono bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded tracking-wider">New Highlight</span>
+                        </div>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            成功使用 <span class="text-blue-400 font-semibold">Gemini 導入專案分析</span>，全自動產出精美可視化的 <span class="text-emerald-400 font-semibold">HTML 專案報告</span>，讓專案結構與分析數據一目了然，極大化提升團隊的可讀性與溝通效率。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: 團隊效率與環境挑戰 -->
+        <div class="slide flex-col justify-center space-y-6 max-w-5xl w-full">
+            <div class="border-l-4 border-emerald-500 pl-4">
+                <h3 class="text-2xl font-bold text-white">03. 團隊效率累積 & 挑戰解決方案</h3>
+                <p class="text-sm text-slate-400">將個人突破轉化為團隊資產，主動填補技術工具痛點</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <!-- 團隊效益 -->
+                <div class="space-y-4">
+                    <div class="text-sm font-semibold tracking-wider text-slate-400 uppercase font-mono">Team & Assets</div>
+                    <div class="code-box p-5 rounded-xl space-y-3">
+                        <h4 class="text-sm font-bold text-emerald-400">● 國合會前端模板資產化</h4>
+                        <p class="text-sm text-slate-300">
+                            將組件標準化，預期能使團隊後續類似專案的初期切版與基礎開發<span class="text-white font-semibold">縮短約 20% ~ 30%</span> 的時間。
+                        </p>
+                    </div>
+                    <div class="code-box p-5 rounded-xl space-y-3">
+                        <h4 class="text-sm font-bold text-emerald-400">● 撰寫 4 篇內部技術文件</h4>
+                        <p class="text-sm text-slate-300">
+                            包含 Linux 維運、PHP 踩坑紀錄等，有效轉化為團隊資產，降低夥伴重複摸索的「通靈成本」。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 挑戰與自主研發 -->
+                <div class="space-y-4">
+                    <div class="text-sm font-semibold tracking-wider text-slate-400 uppercase font-mono">Challenges & Solution</div>
+                    <div class="code-box p-5 rounded-xl space-y-3 border-blue-500/20 bg-gradient-to-b from-slate-900 to-blue-950/10">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-sm font-bold text-blue-400">● 自主研發資安弱掃 Side Project</h4>
+                            <span class="text-[10px] font-mono bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded">Proactive</span>
+                        </div>
+                        <p class="text-sm text-slate-300">
+                            面對外部工具 Nessus 無法使用的痛點，自主研發資安檢測工具，用來隨時掃描自身程式碼是否有漏洞（SQLi, XSS），防敵於未然。
+                        </p>
+                        <div class="border-t border-slate-800 pt-2 text-xs text-slate-400 leading-relaxed">
+                            <span class="text-emerald-400 font-medium">衍生成果：</span>開發出 <span class="text-white font-medium">PM 專屬 HTML 產出工具（無須透過 Postman）</span>，大幅提升跨角色協作效率與 RD 代碼可讀性。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: 下半年目標與自我期許 -->
+        <div class="slide flex-col justify-center space-y-6 max-w-5xl w-full">
+            <div class="border-l-4 border-emerald-500 pl-4">
+                <h3 class="text-2xl font-bold text-white">04. 下半年目標與自我期許 (KPI / OKR)</h3>
+                <p class="text-sm text-slate-400">從代碼編寫者轉型為具備 AI 架構思維的全端工程師</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6">
+                <div class="code-box p-5 rounded-xl space-y-3 border-t-2 border-t-emerald-500">
+                    <div class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">Objective 1</div>
+                    <h4 class="text-base font-bold text-white">導入自動化部署 (CI/CD)</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        計畫在下半年專案中嘗試導入 <span class="text-white">GitHub Actions 自動化部署流程</span>，減少手動上線失誤率，預期提升交付速度 <span class="text-emerald-400 font-bold">15-20%</span>。
+                    </p>
+                </div>
+
+                <div class="code-box p-5 rounded-xl space-y-3 border-t-2 border-t-blue-500">
+                    <div class="text-xs font-mono text-blue-400 font-bold uppercase tracking-wider">Objective 2</div>
+                    <h4 class="text-base font-bold text-white">提升架構與前期規劃能力</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        內化 Claude Code Plan Mode 的體悟：<span class="text-white">架構規劃越好，AI 協作與開發效率越高</span>。下半年著重鍛鍊開發前的規格拆解與系統藍圖設計。
+                    </p>
+                </div>
+
+                <div class="code-box p-5 rounded-xl space-y-3 border-t-2 border-t-purple-500">
+                    <div class="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider">Objective 3</div>
+                    <h4 class="text-base font-bold text-white">多語系拓展與全端思維</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        熟悉 <span class="text-white font-medium">C# 語法</span>以承接多元大型客製化案；學習 <span class="text-white font-medium">Python</span> 深入探討 AI/LLM 底層原理，站在底層視角更高效駕馭 AI 開發流。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: 反向回饋與支援期望 -->
+        <div class="slide flex-col justify-center space-y-6 max-w-4xl w-full">
+            <div class="border-l-4 border-emerald-500 pl-4">
+                <h3 class="text-2xl font-bold text-white">05. 雙向回饋與期望支援</h3>
+                <p class="text-sm text-slate-400">優化接案工作流，建構可持續發展的團隊技術資產</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="code-box p-6 rounded-xl space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-red-400"></span>
+                        <h4 class="text-base font-bold text-white">專案管理優化（需求規格與變更範疇控制）</h4>
+                    </div>
+                    <p class="text-sm text-slate-300 pl-4 leading-relaxed">
+                        希望公司在前線簽約或 PM 訪談時，能更嚴格落實「規格控管」。若客戶在中後期提出非合約範圍之修改，希望能有標準的時程與費用外包機制，保障技術團隊的交付品質與開發身心健康。
+                    </p>
+                </div>
+
+                <div class="code-box p-6 rounded-xl space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <h4 class="text-base font-bold text-white">技術研發與重構緩衝期 (Buffer Time)</h4>
+                    </div>
+                    <p class="text-sm text-slate-300 pl-4 leading-relaxed">
+                        希望在專案順利結案與新案啟動的交接期，能彈性保留 1-2 天的「研發緩衝期」，讓工程團隊能進行 Code Review，或針對內部的公共版模、AI 工具、資安弱掃 Side Project 進行重構升級。這對公司的長期技術資產累積有極大回報。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 底部控制列與頁碼 -->
+    <div class="flex justify-between items-center border-t border-slate-800 pt-4 z-10">
+        <div class="text-xs font-mono text-slate-500">
+            提示: 可使用鍵盤 ◀ / ▶ 方向鍵進行切換投影片
+        </div>
+        
+        <!-- 導覽按鈕 -->
+        <div class="flex items-center space-x-4">
+            <button id="prevBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-750 text-slate-300 border border-slate-700 hover:border-slate-600 rounded-lg text-xs font-mono transition-all">
+                ◀ PREV
+            </button>
+            <div id="slideNum" class="text-xs font-mono text-emerald-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-md">
+                1 / 6
+            </div>
+            <button id="nextBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-mono transition-all shadow-lg shadow-emerald-900/20">
+                NEXT ▶
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript 簡報邏輯 -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideNum = document.getElementById('slideNum');
+        let currentSlide = 0;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                if(index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            slideNum.textContent = `${currentSlide + 1} / ${slides.length}`;
+            
+            // 按鈕狀態控制
+            prevBtn.disabled = currentSlide === 0;
+            prevBtn.style.opacity = currentSlide === 0 ? '0.4' : '1';
+            nextBtn.disabled = currentSlide === slides.length - 1;
+            nextBtn.style.opacity = currentSlide === slides.length - 1 ? '0.4' : '1';
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        });
+
+        // 監聽鍵盤左右方向鍵
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        });
+
+        // 初始化
+        updateSlides();
+    </script>
+</body>
+</html>

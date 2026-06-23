@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 年中績效面談內容</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --line: #e5e7eb;
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --primary-soft: #dbeafe;
+      --green: #059669;
+      --green-soft: #d1fae5;
+      --orange: #ea580c;
+      --orange-soft: #ffedd5;
+      --purple: #7c3aed;
+      --purple-soft: #ede9fe;
+      --red: #dc2626;
+      --red-soft: #fee2e2;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "Noto Sans TC", "PingFang TC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(124, 58, 237, 0.12), transparent 30%),
+        var(--bg);
+      line-height: 1.75;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 52%, #7c3aed 100%);
+      color: #ffffff;
+      border-radius: 30px;
+      padding: 42px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: 80px;
+      bottom: -120px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-subtitle {
+      max-width: 760px;
+      margin: 18px 0 0;
+      font-size: 18px;
+      opacity: 0.92;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 18px;
+      padding: 18px;
+      backdrop-filter: blur(6px);
+    }
+
+    .metric-label {
+      font-size: 14px;
+      opacity: 0.84;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .metric-note {
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: 0.82;
+    }
+
+    .section {
+      margin-top: 30px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 28px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .section-no {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 44px;
+      border-radius: 14px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.25;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-body {
+      padding: 24px 28px 30px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .info-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      background: #ffffff;
+    }
+
+    .info-card.full {
+      grid-column: 1 / -1;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    ul {
+      padding-left: 22px;
+      margin: 8px 0 0;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .highlight {
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+
+    .success {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .progress-wrap {
+      margin-top: 12px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .progress {
+      height: 12px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+    }
+
+    .pill.green {
+      color: #065f46;
+      background: var(--green-soft);
+      border-color: #a7f3d0;
+    }
+
+    .pill.orange {
+      color: #9a3412;
+      background: var(--orange-soft);
+      border-color: #fed7aa;
+    }
+
+    .pill.purple {
+      color: #5b21b6;
+      background: var(--purple-soft);
+      border-color: #ddd6fe;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 22px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 7px;
+      bottom: 8px;
+      width: 2px;
+      background: #dbeafe;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin: 0 0 18px;
+      padding-left: 18px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -21px;
+      top: 8px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 5px var(--primary-soft);
+    }
+
+    .timeline-title {
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .timeline-text {
+      color: #475569;
+      margin: 0;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tech-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      min-height: 146px;
+    }
+
+    .tech-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .tech-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .tech-card p {
+      margin: 0;
+      color: #475569;
+      font-size: 15px;
+    }
+
+    .closing {
+      margin-top: 30px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #ffffff, #eff6ff);
+      border: 1px solid #bfdbfe;
+      box-shadow: var(--shadow);
+    }
+
+    .closing h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      color: var(--primary-dark);
+    }
+
+    .closing p {
+      margin: 0;
+      color: #334155;
+    }
+
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 920px) {
+      .summary-grid,
+      .tech-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        padding: 24px 14px 42px;
+      }
+
+      .hero {
+        padding: 28px 22px;
+        border-radius: 22px;
+      }
+
+      .summary-grid,
+      .tech-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        align-items: flex-start;
+        padding: 20px;
+      }
+
+      .section-body {
+        padding: 20px;
+      }
+
+      .tag {
+        margin-left: 0;
+      }
+
+      .card-title {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero,
+      .section,
+      .closing {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      .section {
+        margin-top: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">📌 2026 年中績效面談</div>
+        <h1>2026 年中績效面談內容</h1>
+        <p class="hero-subtitle">
+          聚焦上半年成果、專案交付、部門效率提升、技術成長與 AI 導入，作為年中績效面談與後續發展規劃的整理依據。
+        </p>
+
+        <div class="summary-grid">
+          <div class="metric-card">
+            <div class="metric-label">點數實績</div>
+            <div class="metric-value">10,074</div>
+            <div class="metric-note">截至 6/15，6 月尚未結束，預估可超標</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">技術分享</div>
+            <div class="metric-value">13 次</div>
+            <div class="metric-note">全年目標 10 次，已提前達標 🚀</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">證照進度</div>
+            <div class="metric-value">1 科通過</div>
+            <div class="metric-note">iPass 資安中級證照 🏅</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">AI Prompt 分享</div>
+            <div class="metric-value">2 式</div>
+            <div class="metric-note">公司內部 AI 應用推廣</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-no">1</div>
+        <div class="section-title">
+          <h2>年中成果總覽</h2>
+          <p>以數據與具體成果呈現上半年執行狀況。</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="cards">
+          <div class="info-card">
+            <div class="card-title">🎯 點數表現 <span class="tag">執行中</span></div>
+            <p>
+              半年度目標為 <span class="highlight">10,200 點</span>（1,700 × 6），目前實際達成
+              <span class="highlight">10,074 點</span>（截至 6/15）。由於 6 月份尚未結束，預估月底可達成並有機會超標。
+            </p>
+            <div class="progress-wrap">
+              <div class="progress-label">
+                <span>目前達成率</span>
+                <strong>98.8%</strong>
+              </div>
+              <div class="progress"><span style="width: 98.8%"></span></div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="card-title">🎤 技術分享 <span class="tag">已超標</span></div>
+            <p>
+              全年目標為 <span class="highlight">10 次</span>，目前已完成
+              <span class="success">13 次</span>，已提前完成年度目標，並持續協助部門技術知識擴散。
+            </p>
+            <div class="progress-wrap">
+              <div class="progress-label">
+                <span>年度目標完成率</span>
+                <strong>130%</strong>
+              </div>
+              <div class="progress"><span style="width: 100%"></span></div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="card-title">🛡️ 證照進度</div>
+            <p>
+              參與 <span class="highlight">iPass 資安中級證照</span>，目前已通過一科，持續強化資安基礎、弱點判讀與專案維運相關能力。
+            </p>
+          </div>
+
+          <div class="info-card">
+            <div class="card-title">🤖 AI Prompt 分享</div>
+            <p>
+              於公司內部分享 <span class="highlight">2 式 AI Prompt</span>，協助團隊將 AI 應用導入日常開發、分析與文件產製流程。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-no">2</div>
+        <div class="section-title">
+          <h2>專案交付與維運貢獻</h2>
+          <p>上半年兼具開發、獨立交付、維運支援與跨角色協作。</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-title">📅 上半年主/協作專案</div>
+            <p class="timeline-text">
+              參與多項專案交付，包含：<strong>哈利找伯樂</strong>（開發）、
+              <strong>水保署</strong>（獨立開發）、<strong>委辦專案</strong>（獨立開發）、
+              <strong>環境部</strong>（客服處理）。
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">🧾 RD / PM 專案分析文件支援</div>
+            <p class="timeline-text">
+              提供 HTML 式專案分析流程文件，協助 RD 與 PM 更快理解專案架構、流程與維護重點，提升溝通效率。
+            </p>
+          </div>
+        </div>
+
+        <div class="pill-row">
+          <span class="pill green">獨立開發</span>
+          <span class="pill green">專案維運</span>
+          <span class="pill purple">跨部門支援</span>
+          <span class="pill orange">HTML 流程文件</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-no">3</div>
+        <div class="section-title">
+          <h2>部門效率與平台化建設</h2>
+          <p>透過工具化、流程化與文件化，降低團隊重複作業成本。</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="cards">
+          <div class="info-card">
+            <div class="card-title">🧠 IM 管理系統</div>
+            <ul>
+              <li>持續推進 IM 管理系統相關作業。</li>
+              <li>協助各 RD 於系統上進行 Trivy 掃描並產出 SBOM 表。</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <div class="card-title">🔐 GEO 監控工具</div>
+            <ul>
+              <li>協助各專案精準掌握 PC 密碼到期與更換資訊。</li>
+              <li>可設定監控服務狀態，並於異常時透過 Mail 通知。</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <div class="card-title">👥 PM HTML 產出工具</div>
+            <ul>
+              <li>提供 PM 可直接使用的 HTML 產出工具。</li>
+              <li>降低對 Postman 的依賴，提升 PM 操作效率與自主性。</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <div class="card-title">🛡️ 資安掃描流程與公版範本</div>
+            <ul>
+              <li>使用 ZAP 掃描工具，並分享手動掃描流程文章，供 RD 參考。</li>
+              <li>撰寫 Trivy 共版 .tpl 檔，供各部門使用。</li>
+              <li>加速 RD 釐清與分析弱點，也加速 PM 提交相關報告。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-no">4</div>
+        <div class="section-title">
+          <h2>技術成長與能力升級</h2>
+          <p>持續擴展後端、維運、資安與知識管理能力。</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="tech-grid">
+          <div class="tech-card">
+            <div class="tech-icon">🖥️</div>
+            <h3>架構與部署</h3>
+            <p>學習 Docker 部署流程，以及 Linux 系統指令與實務應用。</p>
+          </div>
+
+          <div class="tech-card">
+            <div class="tech-icon">🗄️</div>
+            <h3>程式語言</h3>
+            <p>學習 Python 語法與應用，擴充自動化與資料處理能力。</p>
+          </div>
+
+          <div class="tech-card">
+            <div class="tech-icon">🛡️</div>
+            <h3>資安與維運</h3>
+            <p>學習 ZAP、Trivy 掃描工具，提升弱點掃描與維運判讀能力。</p>
+          </div>
+
+          <div class="tech-card">
+            <div class="tech-icon">📐</div>
+            <h3>知識管理</h3>
+            <p>導入 Obsidian 筆記軟體應用，強化技術知識沉澱與查找效率。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-no">5</div>
+        <div class="section-title">
+          <h2>研究與 AI 導入</h2>
+          <p>將 AI 應用落地到專案分析、工具開發與內部效率提升。</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="cards">
+          <div class="info-card">
+            <div class="card-title">🤖 AI 專案分析報告</div>
+            <p>
+              使用 AI 導入專案分析流程，協助產製 HTML 報告，提升專案盤點、文件輸出與交接效率。
+            </p>
+          </div>
+
+          <div class="info-card">
+            <div class="card-title">🤖 AI 輔助工具開發</div>
+            <p>
+              使用 Copilot 協助開發新想法工具，例如 GEO 監控工具，將概念快速轉為可用功能。
+            </p>
+          </div>
+
+          <div class="info-card full">
+            <div class="card-title">🤖 Ollama 應用研究</div>
+            <p>
+              研究 Ollama 應用程式串接方式，評估未來導入本地端 AI、內部知識問答與專案輔助開發的可能性。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <h2>年中總結</h2>
+      <p>
+        上半年整體成果涵蓋專案交付、維運支援、資安導入、平台化工具建設與 AI 應用研究。
+        後續將持續以「提升團隊效率、強化維運品質、推動 AI 落地」為核心方向，讓個人技術成長與部門效益同步提升。
+      </p>
+    </section>
+
+    <div class="footer">
+      2026 年中績效面談內容｜建議以瀏覽器開啟，可直接列印或另存為 PDF
+    </div>
+  </main>
+</body>
+</html>
